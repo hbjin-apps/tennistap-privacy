@@ -89,12 +89,14 @@ Apple Watch app (bundle ID <code>com.hbjin.TennisTap</code>) and the Wear OS app
 <p>TennisTap collects no personal information whatsoever. Specifically:</p>
 <ul>
   <li>There is no account, sign-up, or login.</li>
-  <li>There is no server behind the app, and the app does not connect to the internet. The Wear OS
-      app does not even declare the <code>INTERNET</code> permission.</li>
+  <li>The app has no server of its own, and its own code makes no network requests. The Wear OS
+      build does ship with the <code>INTERNET</code> and <code>ACCESS_NETWORK_STATE</code>
+      permissions, added by the Google Play Billing library that the optional tip needs; that traffic
+      goes to Google, not to the developer.</li>
   <li>There are no advertising, analytics, crash-reporting, or tracking SDKs of any kind.</li>
   <li>The app does not access your location, camera, microphone, photos, contacts, calendar,
       health or fitness data, or any advertising or device identifier.</li>
-  <li>Nothing is transmitted off your watch.</li>
+  <li>Nothing about you or your matches is transmitted off your watch to the developer.</li>
 </ul>
 
 <h3>2. Data stored on your device</h3>
@@ -105,8 +107,10 @@ itself:</p>
   <li>Your match settings (number of sets, games per set)</li>
 </ul>
 <p>This is stored in the app's private storage on the device (<code>UserDefaults</code> on watchOS,
-<code>SharedPreferences</code> on Wear OS). It never leaves the device, it is not sent to any server,
-and it is removed when you delete the app.</p>
+<code>SharedPreferences</code> on Wear OS) and is removed when you delete the app. On Wear OS, cloud
+backup and device-to-device transfer are switched off for this app, so the match data stays on the
+watch. On Apple Watch it may be included in your own iCloud or device backup, which you control and
+which the developer cannot access. It is never sent to any server operated by the developer.</p>
 
 <h3>3. In-app purchase</h3>
 <p>TennisTap offers one optional tip that supports the developer. The purchase is processed entirely
@@ -123,6 +127,8 @@ card number, or billing address. Those transactions are governed by:</p>
   <li><code>VIBRATE</code> — haptic feedback when a point is scored</li>
   <li><code>WAKE_LOCK</code> — keeps the scoreboard visible while a match is in progress</li>
   <li><code>com.android.vending.BILLING</code> — required for the optional tip</li>
+  <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> — added by the Google Play Billing
+      library for the optional tip; the app's own code makes no network requests</li>
 </ul>
 <p>The Apple Watch app requests no runtime permissions.</p>
 
@@ -162,12 +168,14 @@ those terms are defined by the CCPA/CPRA.</p>
 <p>TennisTap은 어떠한 개인정보도 수집하지 않습니다. 구체적으로:</p>
 <ul>
   <li>계정, 회원가입, 로그인이 없습니다.</li>
-  <li>앱을 위한 서버가 없으며, 앱은 인터넷에 연결하지 않습니다. Wear OS 앱은 <code>INTERNET</code>
-      권한조차 선언하지 않습니다.</li>
+  <li>개발자가 운영하는 서버가 없고, 앱 코드가 직접 네트워크 요청을 보내지 않습니다. 다만 Wear OS
+      빌드에는 <code>INTERNET</code>과 <code>ACCESS_NETWORK_STATE</code> 권한이 포함되어 있습니다.
+      선택적 팁 결제에 쓰이는 Google Play 결제 라이브러리가 요구하는 권한이며, 해당 통신은 Google로
+      향할 뿐 개발자에게 오지 않습니다.</li>
   <li>광고, 분석, 오류 리포팅, 트래킹 SDK를 일절 사용하지 않습니다.</li>
   <li>위치, 카메라, 마이크, 사진, 연락처, 캘린더, 건강·피트니스 데이터, 광고 식별자나 기기 식별자에
       접근하지 않습니다.</li>
-  <li>시계 밖으로 전송되는 데이터가 없습니다.</li>
+  <li>이용자나 경기에 관한 데이터가 시계 밖으로 나가 개발자에게 전달되는 일이 없습니다.</li>
 </ul>
 
 <h3>2. 기기에 저장되는 정보</h3>
@@ -177,8 +185,11 @@ those terms are defined by the CCPA/CPRA.</p>
   <li>경기 설정(세트 수, 세트당 게임 수)</li>
 </ul>
 <p>이 정보는 기기 내 앱 전용 저장소(watchOS의 <code>UserDefaults</code>, Wear OS의
-<code>SharedPreferences</code>)에 보관됩니다. 기기 밖으로 나가지 않고, 어떤 서버로도 전송되지 않으며,
-앱을 삭제하면 함께 삭제됩니다.</p>
+<code>SharedPreferences</code>)에 보관되며 앱을 삭제하면 함께 삭제됩니다. Wear OS에서는 이 앱의
+클라우드 백업과 기기 간 전송을 꺼두었기 때문에 경기 데이터가 시계 밖으로 나가지 않습니다. Apple
+Watch에서는 이용자 본인의 iCloud 또는 기기 백업에 포함될 수 있으나, 이는 이용자가 통제하는
+영역이며 개발자는 접근할 수 없습니다. 개발자가 운영하는 서버로는 어떤 경우에도 전송되지
+않습니다.</p>
 
 <h3>3. 인앱 결제</h3>
 <p>TennisTap에는 개발자를 후원하는 선택적 팁 상품이 하나 있습니다. 결제는 전적으로 Apple App Store
@@ -195,6 +206,8 @@ those terms are defined by the CCPA/CPRA.</p>
   <li><code>VIBRATE</code> — 득점 시 햅틱 피드백</li>
   <li><code>WAKE_LOCK</code> — 경기 진행 중 점수판 화면 유지</li>
   <li><code>com.android.vending.BILLING</code> — 선택적 팁 결제에 필요</li>
+  <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> — 선택적 팁 결제를 위해 Google Play
+      결제 라이브러리가 추가하는 권한. 앱 코드 자체는 네트워크 요청을 하지 않습니다</li>
 </ul>
 <p>Apple Watch 앱은 별도의 런타임 권한을 요청하지 않습니다.</p>
 
@@ -232,12 +245,14 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
 <p>TennisTap はいかなる個人情報も収集しません。具体的には:</p>
 <ul>
   <li>アカウント、会員登録、ログインはありません。</li>
-  <li>アプリのためのサーバーは存在せず、アプリはインターネットに接続しません。Wear OS アプリは
-      <code>INTERNET</code> 権限すら宣言していません。</li>
+  <li>開発者が運営するサーバーはなく、アプリのコードがネットワーク通信を行うこともありません。ただし
+      Wear OS 版には <code>INTERNET</code> と <code>ACCESS_NETWORK_STATE</code> の権限が含まれます。
+      任意のチップ決済に使う Google Play 課金ライブラリが必要とする権限で、その通信先は Google であり
+      開発者ではありません。</li>
   <li>広告、解析、クラッシュレポート、トラッキングの SDK は一切使用していません。</li>
   <li>位置情報、カメラ、マイク、写真、連絡先、カレンダー、ヘルスケア/フィットネスデータ、
       広告 ID や端末識別子にはアクセスしません。</li>
-  <li>時計の外へ送信されるデータはありません。</li>
+  <li>お客様や試合に関するデータが時計の外に出て開発者に届くことはありません。</li>
 </ul>
 
 <h3>2. 端末内に保存される情報</h3>
@@ -247,8 +262,11 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
   <li>試合設定 (セット数、1セットあたりのゲーム数)</li>
 </ul>
 <p>これらは端末内のアプリ専用ストレージ (watchOS では <code>UserDefaults</code>、Wear OS では
-<code>SharedPreferences</code>) に保存されます。端末の外に出ることはなく、いかなるサーバーにも
-送信されず、アプリを削除すると一緒に削除されます。</p>
+<code>SharedPreferences</code>) に保存され、アプリを削除すると一緒に削除されます。Wear OS では
+このアプリのクラウドバックアップと端末間転送を無効にしているため、試合データが時計の外に出ることは
+ありません。Apple Watch ではお客様ご自身の iCloud または端末バックアップに含まれる場合が
+ありますが、これはお客様が管理する領域であり、開発者はアクセスできません。開発者が運営する
+サーバーに送信されることは一切ありません。</p>
 
 <h3>3. アプリ内課金</h3>
 <p>TennisTap には開発者を応援するための任意のチップ商品が 1 つあります。決済はすべて Apple App Store
@@ -265,6 +283,8 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
   <li><code>VIBRATE</code> — 得点時の触覚フィードバック</li>
   <li><code>WAKE_LOCK</code> — 試合中にスコアボードの表示を維持するため</li>
   <li><code>com.android.vending.BILLING</code> — 任意のチップ決済に必要</li>
+  <li><code>INTERNET</code>、<code>ACCESS_NETWORK_STATE</code> — 任意のチップ決済のために Google Play
+      課金ライブラリが追加する権限。アプリのコード自体はネットワーク通信を行いません</li>
 </ul>
 <p>Apple Watch アプリは実行時の権限を要求しません。</p>
 
@@ -304,11 +324,13 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
 <p>TennisTap 不收集任何个人信息。具体而言:</p>
 <ul>
   <li>没有账户、没有注册、没有登录。</li>
-  <li>应用没有后端服务器, 也不会连接互联网。Wear OS 应用甚至没有声明 <code>INTERNET</code> 权限。</li>
+  <li>没有开发者运营的服务器, 应用代码本身也不会发起任何网络请求。不过 Wear OS 版本包含
+      <code>INTERNET</code> 和 <code>ACCESS_NETWORK_STATE</code> 权限, 这是可选打赏所用的
+      Google Play 结算库要求的; 相关通信发往 Google, 而不是开发者。</li>
   <li>不使用任何广告、分析、崩溃报告或跟踪 SDK。</li>
   <li>不访问您的位置、摄像头、麦克风、照片、通讯录、日历、健康或健身数据, 也不访问任何广告标识符
       或设备标识符。</li>
-  <li>没有任何数据离开您的手表。</li>
+  <li>关于您或您比赛的数据不会离开手表传给开发者。</li>
 </ul>
 
 <h3>2. 存储在您设备上的数据</h3>
@@ -318,7 +340,9 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
   <li>您的比赛设置 (盘数、每盘局数)</li>
 </ul>
 <p>这些内容保存在设备上应用的私有存储中 (watchOS 使用 <code>UserDefaults</code>, Wear OS 使用
-<code>SharedPreferences</code>)。它们不会离开设备, 不会发送到任何服务器, 并在您删除应用时一并删除。</p>
+<code>SharedPreferences</code>), 并在您删除应用时一并删除。在 Wear OS 上, 本应用的云备份和设备间
+转移均已关闭, 因此比赛数据不会离开手表。在 Apple Watch 上, 它可能包含在您自己的 iCloud 或设备
+备份中, 那由您掌控, 开发者无法访问。它绝不会被发送到开发者运营的任何服务器。</p>
 
 <h3>3. 应用内购买</h3>
 <p>TennisTap 提供一项可选的打赏, 用于支持开发者。该购买完全由 Apple App Store 或 Google Play 处理。
@@ -334,6 +358,8 @@ Apple Watch アプリ (バンドル ID <code>com.hbjin.TennisTap</code>) およ�
   <li><code>VIBRATE</code> — 得分时的触感反馈</li>
   <li><code>WAKE_LOCK</code> — 比赛进行期间保持记分板可见</li>
   <li><code>com.android.vending.BILLING</code> — 可选打赏所需</li>
+  <li><code>INTERNET</code>、<code>ACCESS_NETWORK_STATE</code> — 可选打赏所用的 Google Play 结算库
+      添加的权限; 应用代码本身不发起网络请求</li>
 </ul>
 <p>Apple Watch 应用不请求任何运行时权限。</p>
 
@@ -372,12 +398,15 @@ trata su información y se aplica a la app de Apple Watch (ID de paquete
 <p>TennisTap no recopila ninguna información personal. En concreto:</p>
 <ul>
   <li>No hay cuenta, registro ni inicio de sesión.</li>
-  <li>No existe ningún servidor detrás de la app y la app no se conecta a internet. La app de
-      Wear OS ni siquiera declara el permiso <code>INTERNET</code>.</li>
+  <li>No existe ningún servidor gestionado por el desarrollador y el propio código de la app no
+      realiza ninguna petición de red. La versión de Wear OS sí incluye los permisos
+      <code>INTERNET</code> y <code>ACCESS_NETWORK_STATE</code>, que añade la biblioteca de
+      facturación de Google Play necesaria para la propina opcional; ese tráfico va a Google, no al
+      desarrollador.</li>
   <li>No se utiliza ningún SDK de publicidad, analítica, informes de errores o seguimiento.</li>
   <li>La app no accede a su ubicación, cámara, micrófono, fotos, contactos, calendario, datos de
       salud o actividad física, ni a ningún identificador publicitario o de dispositivo.</li>
-  <li>Nada se transmite fuera de su reloj.</li>
+  <li>Ningún dato sobre usted o sus partidos sale de su reloj hacia el desarrollador.</li>
 </ul>
 
 <h3>2. Datos almacenados en su dispositivo</h3>
@@ -388,8 +417,12 @@ el propio reloj:</p>
   <li>Sus ajustes de partido (número de sets, juegos por set)</li>
 </ul>
 <p>Se almacena en el almacenamiento privado de la app en el dispositivo (<code>UserDefaults</code>
-en watchOS, <code>SharedPreferences</code> en Wear OS). Nunca sale del dispositivo, no se envía a
-ningún servidor y se elimina cuando desinstala la app.</p>
+en watchOS, <code>SharedPreferences</code> en Wear OS) y se elimina cuando desinstala la app. En
+Wear OS, la copia de seguridad en la nube y la transferencia entre dispositivos están desactivadas
+para esta app, así que los datos del partido no salen del reloj. En Apple Watch pueden quedar
+incluidos en su propia copia de seguridad de iCloud o del dispositivo, que usted controla y a la que
+el desarrollador no tiene acceso. Nunca se envían a ningún servidor gestionado por el
+desarrollador.</p>
 
 <h3>3. Compra dentro de la app</h3>
 <p>TennisTap ofrece una propina opcional para apoyar al desarrollador. La compra la procesan
@@ -406,6 +439,9 @@ número de tarjeta ni dirección de facturación. Esas transacciones se rigen po
   <li><code>VIBRATE</code> — respuesta háptica al anotar un punto</li>
   <li><code>WAKE_LOCK</code> — mantiene visible el marcador mientras hay un partido en curso</li>
   <li><code>com.android.vending.BILLING</code> — necesario para la propina opcional</li>
+  <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> — los añade la biblioteca de
+      facturación de Google Play para la propina opcional; el código de la app no realiza
+      peticiones de red</li>
 </ul>
 <p>La app de Apple Watch no solicita ningún permiso en tiempo de ejecución.</p>
 
@@ -448,13 +484,17 @@ traite vos informations. Elle s'applique à l'application Apple Watch (identifia
 <p>TennisTap ne collecte aucune information personnelle. Plus précisément :</p>
 <ul>
   <li>Il n'y a ni compte, ni inscription, ni connexion.</li>
-  <li>Aucun serveur ne se trouve derrière l'application et celle-ci ne se connecte pas à internet.
-      L'application Wear OS ne déclare même pas la permission <code>INTERNET</code>.</li>
+  <li>Il n'existe aucun serveur exploité par le développeur et le code de l'application n'effectue
+      aucune requête réseau. La version Wear OS inclut toutefois les autorisations
+      <code>INTERNET</code> et <code>ACCESS_NETWORK_STATE</code>, ajoutées par la bibliothèque de
+      facturation Google Play nécessaire au pourboire facultatif ; ce trafic est destiné à Google,
+      pas au développeur.</li>
   <li>Aucun SDK de publicité, d'analyse, de rapport de plantage ou de suivi n'est utilisé.</li>
   <li>L'application n'accède ni à votre position, ni à l'appareil photo, au microphone, aux photos,
       aux contacts, au calendrier, aux données de santé ou d'activité physique, ni à un
       quelconque identifiant publicitaire ou d'appareil.</li>
-  <li>Rien n'est transmis en dehors de votre montre.</li>
+  <li>Aucune donnée vous concernant ou concernant vos matchs ne quitte votre montre pour aller au
+      développeur.</li>
 </ul>
 
 <h3>2. Données stockées sur votre appareil</h3>
@@ -465,9 +505,12 @@ les éléments suivants sur la montre elle-même :</p>
   <li>Vos réglages de match (nombre de sets, jeux par set)</li>
 </ul>
 <p>Ces données sont conservées dans le stockage privé de l'application sur l'appareil
-(<code>UserDefaults</code> sur watchOS, <code>SharedPreferences</code> sur Wear OS). Elles ne
-quittent jamais l'appareil, ne sont envoyées à aucun serveur et sont supprimées lorsque vous
-désinstallez l'application.</p>
+(<code>UserDefaults</code> sur watchOS, <code>SharedPreferences</code> sur Wear OS) et sont
+supprimées lorsque vous désinstallez l'application. Sur Wear OS, la sauvegarde dans le cloud et le
+transfert entre appareils sont désactivés pour cette application : les données de match restent donc
+sur la montre. Sur Apple Watch, elles peuvent être incluses dans votre propre sauvegarde iCloud ou
+de l'appareil, que vous contrôlez et à laquelle le développeur n'a pas accès. Elles ne sont jamais
+envoyées à un serveur exploité par le développeur.</p>
 
 <h3>3. Achat intégré</h3>
 <p>TennisTap propose un pourboire facultatif destiné à soutenir le développeur. L'achat est traité
@@ -485,6 +528,9 @@ régies par :</p>
   <li><code>VIBRATE</code> — retour haptique lorsqu'un point est marqué</li>
   <li><code>WAKE_LOCK</code> — maintient le tableau de score visible pendant un match</li>
   <li><code>com.android.vending.BILLING</code> — nécessaire pour le pourboire facultatif</li>
+  <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> — ajoutées par la bibliothèque de
+      facturation Google Play pour le pourboire facultatif ; le code de l'application n'effectue
+      aucune requête réseau</li>
 </ul>
 <p>L'application Apple Watch ne demande aucune autorisation à l'exécution.</p>
 
@@ -529,12 +575,15 @@ Ihren Informationen umgeht. Sie gilt für die Apple-Watch-App (Bundle-ID
 <p>TennisTap erhebt keinerlei personenbezogene Daten. Im Einzelnen:</p>
 <ul>
   <li>Es gibt kein Konto, keine Registrierung und keine Anmeldung.</li>
-  <li>Hinter der App steht kein Server, und die App stellt keine Internetverbindung her. Die
-      Wear-OS-App deklariert nicht einmal die Berechtigung <code>INTERNET</code>.</li>
+  <li>Es gibt keinen vom Entwickler betriebenen Server, und der Code der App stellt selbst keine
+      Netzwerkanfragen. Die Wear-OS-Fassung enthält allerdings die Berechtigungen
+      <code>INTERNET</code> und <code>ACCESS_NETWORK_STATE</code>, die die für das optionale
+      Trinkgeld benötigte Google-Play-Billing-Bibliothek mitbringt; dieser Datenverkehr geht an
+      Google, nicht an den Entwickler.</li>
   <li>Es werden keinerlei SDKs für Werbung, Analyse, Absturzberichte oder Tracking eingesetzt.</li>
   <li>Die App greift nicht auf Ihren Standort, die Kamera, das Mikrofon, Fotos, Kontakte, den
       Kalender, Gesundheits- oder Fitnessdaten oder auf Werbe- bzw. Gerätekennungen zu.</li>
-  <li>Es werden keine Daten von Ihrer Uhr übertragen.</li>
+  <li>Keine Daten über Sie oder Ihre Matches verlassen Ihre Uhr in Richtung Entwickler.</li>
 </ul>
 
 <h3>2. Auf Ihrem Gerät gespeicherte Daten</h3>
@@ -545,8 +594,11 @@ auf der Uhr selbst:</p>
   <li>Ihre Match-Einstellungen (Anzahl der Sätze, Spiele pro Satz)</li>
 </ul>
 <p>Diese Daten liegen im privaten Speicher der App auf dem Gerät (<code>UserDefaults</code> unter
-watchOS, <code>SharedPreferences</code> unter Wear OS). Sie verlassen das Gerät nie, werden an keinen
-Server gesendet und werden mit der Deinstallation der App gelöscht.</p>
+watchOS, <code>SharedPreferences</code> unter Wear OS) und werden mit der Deinstallation der App
+gelöscht. Unter Wear OS sind Cloud-Backup und Geräteübertragung für diese App abgeschaltet, die
+Match-Daten bleiben also auf der Uhr. Auf der Apple Watch können sie in Ihrem eigenen iCloud- oder
+Gerätebackup enthalten sein; das kontrollieren Sie, und der Entwickler hat keinen Zugriff darauf. An
+einen vom Entwickler betriebenen Server werden sie nie gesendet.</p>
 
 <h3>3. In-App-Kauf</h3>
 <p>TennisTap bietet ein optionales Trinkgeld zur Unterstützung des Entwicklers an. Der Kauf wird
@@ -564,6 +616,9 @@ gelten:</p>
   <li><code>VIBRATE</code> — haptisches Feedback beim Punktgewinn</li>
   <li><code>WAKE_LOCK</code> — hält die Anzeigetafel während eines laufenden Matches sichtbar</li>
   <li><code>com.android.vending.BILLING</code> — für das optionale Trinkgeld erforderlich</li>
+  <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> — von der
+      Google-Play-Billing-Bibliothek für das optionale Trinkgeld hinzugefügt; der Code der App
+      stellt keine Netzwerkanfragen</li>
 </ul>
 <p>Die Apple-Watch-App fordert keine Laufzeitberechtigungen an.</p>
 
